@@ -36,20 +36,15 @@ sudo ./tools/l4t_flash_prerequisites.sh
 ```
 
 6. copy the Auvidea Kernels
-(if you manually want to copy content then you can do it.)
 
-A. Copy all scripts and individual files from kernel_out folder and paste it to Linux ´_for_Tegre folder along with other scripts and files
+A. Copy all scripts and individual files from kernel_out folder and paste it to Linux_for_Tegra folder along with other scripts and files
 
 B. ~/Downloads/kernel_out/kernel/dtb
-copy all .dtb files and paste it in the reciprocal folder in Linux_for_Tigre folder with other .dtb files 
+copy all .dtb files inside dtb folder and paste it in the reciprocal folder in Linux_for_Tegra folder with other .dtb files 
 
 C. ~/Downloads/kernel_out/bootloader/generic/BCT
- copy all the files inside this folder and paste it to reciprocal folder in Linux_for_Tigre folder with other files
-or you can use following command 
+ copy all the files inside this folder and paste it to reciprocal folder in Linux_for_Tegra folder with other files
 
-```bash
-cp ~/kernel_out/* ${HOME}/nvidia-jetson/Linux_for_Tegra
-```
 
 7. Flashing the orin
 
@@ -87,7 +82,7 @@ After that we wait to orin to boot and install setup.
 11. Open terminal in home directory
 ```bash
 sudo apt update
-sudo apt upgrade
+sudo apt upgrade -Y
 ```
 
 12. install python
@@ -100,50 +95,27 @@ sudo pip3 install -U jetson-stats
 ```
 (ignore the warning at end.)
 
-14. reboot orin
-
-15. real time system monitoring 
-```bash
-jtop
-```
-go to 7INFO menu option from the bottom pannel and check if all the Libraries you want are present there, CUDA, cuDNN, TensorRT, VPI, Vulkan, OpenCV
-These all will be in status  MISSING.
-
-Now we have to set them up for orin.
-
-16. check nvidia-jetpack
-```bash
-apt search nvidia-jetpack
-```
-you will see 
-* nvidia-jetpack,
-* nvidia-jetpack-dev, 
-* nvidia-jetpack-runtime
-
-17. install nvidia-jetpack
+14. install nvidia-jetpack
 ```bash
 sudo apt install nvidia-jetpack
 ```
 (this process will take 10 minutes)
 
-now again in terminal run 'jtop' and go to 7INFO to check all libraries are installed correctly.
-```bash
-jtop
-```
-18. first check the cuda location is correct
+15. first check the cuda location is correct
 ```bash
 ls /usr/local/ | grep cuda
 ```
 here you will see cuda and cuda-12.6
 
-19. update .bashrc
-go to bashrc folder and here we have to set the path for out CUDA , so we can use nvcc from terminal and CUDA is discoverable all the time.
-add following lines at the end of .bashrc file
+16. update .bashrc
+go to .bashrc folder and here we have to set the path for out CUDA , so we can use nvcc from terminal and CUDA is discoverable all the time.
+
+Manually add following lines at the end of .bashrc file ('ctrl + h' to see hidden foolders inclusing .bashrc in home directory)
 ```bash
 export PATH=/usr/local/cuda-12.6/bin:$PATH
 export LD_LIBRARY_PATH=/usr/local/cuda-12.6/lib64:$LD_LIBRARY_PATH
 ```
-20. reboot orin to apply changes.
+17. reboot orin to apply changes.
 ```bash
 sudo reboot
 ```
