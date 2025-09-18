@@ -1,0 +1,77 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+pose_tracking.log
+
+# Session data
+pose_tracking_session_*.json
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Camera calibration data
+camera_calibration_*.json
+camera_matrix.npy
+distortion_coefficients.npy
+
+# Model files (if any)
+*.onnx
+*.pb
+*.tflite
+
+# Data files
+data/
+recordings/
+*.mp4
+*.avi
+*.mov
+
+# Configuration overrides (keep the default config)
+pose_tracking_config_local.json
+robot_config_*.json
+
+# Launch script logs
+launch_pose_tracking.log

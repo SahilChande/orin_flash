@@ -120,3 +120,129 @@ export LD_LIBRARY_PATH=/usr/local/cuda-12.6/lib64:$LD_LIBRARY_PATH
 sudo reboot
 ```
 Setup complete with all required libraries and CUDA
+
+## igus Rebel Pose Tracking Setup
+
+After completing the basic Jetson Orin setup above, you can install the igus Rebel pose tracking system:
+
+### Prerequisites for Pose Tracking
+- Completed Jetson Orin AGX setup (steps 1-17 above)
+- USB camera or CSI camera connected to Jetson
+- igus Rebel robot connected to the same network
+- Python 3.8 or higher (already installed in step 12)
+
+### Installation
+
+18. Install the pose tracking system
+```bash
+cd ~/
+git clone https://github.com/SahilChande/orin_flash.git
+cd orin_flash
+./install_pose_tracking.sh
+```
+
+This script will:
+- Install required Python packages (OpenCV, MediaPipe, etc.)
+- Create a virtual environment
+- Configure CUDA paths for GPU acceleration
+- Set up camera access
+- Create launch scripts
+
+### Configuration
+
+19. Configure the robot connection
+```bash
+nano pose_tracking_config.json
+```
+
+Update the robot IP address and other settings:
+```json
+{
+  "robot_ip": "192.168.1.100",
+  "robot_port": 3920,
+  "camera_index": 0
+}
+```
+
+### Usage
+
+20. Launch the pose tracking system
+```bash
+# Run the example with gesture recognition
+./launch_pose_tracking.sh example
+
+# Or run the main pose tracking system
+./launch_pose_tracking.sh
+```
+
+### Controls
+- **'q'** - Quit the application
+- **'r'** - Toggle recording of pose data
+- **'s'** - Save current session data
+- **'c'** - Calibrate robot to current pose
+- **'t'** - Toggle robot tracking mode
+- **'space'** - Emergency stop
+
+### Features
+- **Real-time pose detection** using MediaPipe with GPU acceleration
+- **Gesture recognition** (wave, point, stop gestures)
+- **Robot communication** via TCP/IP to igus Rebel
+- **Pose-to-robot mapping** with safety constraints
+- **Data recording** and session playback
+- **Visualization** with pose landmarks overlay
+
+### Safety Features
+- Joint limit checking
+- Confidence thresholds for pose tracking
+- Emergency stop functionality
+- Collision detection boundaries
+- Smooth motion interpolation
+
+### Troubleshooting
+
+**Camera not detected:**
+```bash
+# Check available cameras
+ls /dev/video*
+
+# Test camera manually
+python3 -c "import cv2; cap = cv2.VideoCapture(0); print('Camera:', cap.isOpened()); cap.release()"
+```
+
+**Robot connection issues:**
+```bash
+# Check network connectivity
+ping 192.168.1.100
+
+# Verify robot IP and port in config file
+cat pose_tracking_config.json | grep -E "(robot_ip|robot_port)"
+```
+
+**CUDA acceleration not working:**
+```bash
+# Check CUDA installation
+nvcc --version
+
+# Verify GPU availability in Python
+python3 -c "import cv2; print('CUDA devices:', cv2.cuda.getCudaEnabledDeviceCount())"
+```
+
+### Advanced Usage
+
+**Custom gesture recognition:**
+Edit `example_pose_tracking.py` to add your own gesture detection functions.
+
+**Robot calibration:**
+Use the 'c' key during operation to calibrate the robot's current pose as the reference position.
+
+**Data analysis:**
+Session data is saved in JSON format and can be analyzed with:
+```bash
+python3 -c "
+import json
+with open('pose_tracking_session_YYYYMMDD_HHMMSS.json', 'r') as f:
+    data = json.load(f)
+    print(f'Session duration: {len(data[\"detected_poses\"])} frames')
+    print(f'Robot poses recorded: {len(data[\"robot_poses\"])} poses')
+"
+```

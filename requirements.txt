@@ -1,0 +1,39 @@
+# igus Rebel Pose Tracking Dependencies
+# Optimized for NVIDIA Jetson Orin AGX with CUDA support
+
+# Computer Vision and AI
+opencv-python>=4.8.0
+mediapipe>=0.10.0
+numpy>=1.21.0
+
+# Data handling and utilities
+scipy>=1.9.0
+matplotlib>=3.5.0
+pandas>=1.5.0
+
+# Communication and networking
+pyserial>=3.5
+requests>=2.28.0
+
+# Configuration and logging
+pyyaml>=6.0
+python-dotenv>=0.19.0
+
+# Optional: For advanced pose processing
+scikit-learn>=1.1.0
+filterpy>=1.4.5
+
+# Optional: For 3D visualization
+open3d>=0.16.0
+
+# Development and testing (optional)
+pytest>=7.0.0
+black>=22.0.0
+flake8>=5.0.0
+
+# Jetson-specific optimizations
+# Note: These may need to be installed separately or from NVIDIA's repositories
+# jetson-stats  # Already mentioned in main setup
+# tensorflow-gpu  # For advanced AI models if needed
+# torch  # PyTorch with CUDA support for Jetson
+# torchvision  # Computer vision extensions for PyTorch
